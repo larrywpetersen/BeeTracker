@@ -1,0 +1,14 @@
+{% extends "hive_activity/base.html" %}
+
+
+{% block content %}
+
+<h1>Hive Activity Menu</h1>
+
+<ul>
+    <li><a href="{% url 'add_hive_activity'%}">Add</a></li>
+    <br />
+    <li><a href="{% url 'hive_activity_reference'%}">Reference</a></li>
+</ul>
+
+{% endblock content %}

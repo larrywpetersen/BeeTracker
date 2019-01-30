@@ -1,0 +1,28 @@
+{% extends "knowbees/base.html" %}
+
+
+{% block header %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css"
+      href="{% static 'hives/css/add.css' %}">
+<script src="{% static 'hives/javascript/add.js' %}"></script>
+
+{% endblock header %}
+
+
+
+{% block content %}
+
+{% include "./base.html" %}
+
+
+<h1>Hives Menu</h1>
+
+<h2>Second Level Heading</h2>
+
+<ul>
+    <li><a href="{% url 'add_hive'%}">Add</a></li>
+</ul>
+
+{% endblock content %}

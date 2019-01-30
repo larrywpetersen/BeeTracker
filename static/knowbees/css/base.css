@@ -1,0 +1,75 @@
+
+body {
+    background-color: #e4e476;
+    margin-top : 30px;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+
+input {
+    padding: 3px;
+}
+
+select {
+    padding: 3px;
+}
+
+
+.left {
+    text-align: left;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
+
+tr.tall {
+    height: 20px;
+}
+
+
+.text-s1 {
+    padding: 3px;
+    font-size: 1.0em;
+}
+
+.text-s2 {
+    padding: 3px;
+    font-size: 1.2em;
+}
+
+.text-s3 {
+    padding: 3px;
+    font-size: 1.4em;
+}
+
+
+.year0  {
+    background-color: #0000ff;
+    color: #ffffff;
+}
+.year1  {
+    background-color: #cccccc;
+    color: #000000;
+}
+.year2 {
+    background-color: #ffff00;
+    color: #000000;
+}
+.year3  {
+    background-color: #ff0000;
+    color: #ffffff;
+}
+.year4  {
+    background-color: #00fc00;
+    color: #000000;
+}
+.yearx  {
+    background-color: #c300ff;
+    color: #ffffff;
+}

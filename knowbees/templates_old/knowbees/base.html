@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        {% if title %}
+            <title>Know Bees - {{ title }}</title>
+        {% else %}
+            <title>Know Bees</title>
+        {% endif %}
+
+        <meta charset="UTF-8">
+
+        <link rel="stylesheet" type="text/css"
+                href="{% static 'hive_activity/css/base.css' %}">
+        <script src="{% static 'hive_activity/javascript/base.js' %}"></script>
+
+        {% block header %}
+        {% endblock %}
+
+    </head>
+
+    <body>
+
+        {% block content %}
+        {% endblock %}
+
+    </body>
+</html>
+    

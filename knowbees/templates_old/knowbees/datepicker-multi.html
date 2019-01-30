@@ -1,0 +1,14 @@
+
+{% load staticfiles %}
+
+<link href="{% static 'knowbees/jquery.datepick/jquery.datepick.css' %}" rel="stylesheet">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="{% static 'knowbees/jquery.datepick/jquery.plugin.js' %}"></script>
+<script src="{% static 'knowbees/jquery.datepick/jquery.datepick.js' %}"></script>
+<script>
+$(function() {
+	$('.popupDatepicker').datepick({ dateFormat: "dd M yyyy" });
+});
+
+
+</script>
