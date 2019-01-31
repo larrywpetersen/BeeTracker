@@ -3,8 +3,6 @@
 
 {% block header %}
 
-{% include 'knowbees/datepicker-multi.html' %}
-
 {% load static %}
 <link rel="stylesheet" type="text/css"
       href="{% static 'hives/css/add.css' %}">
@@ -30,11 +28,12 @@
         <h1 class="center add-width heading">Add a Hive</h1>
 
         <br /><br />
+        <p>{% autoescape off %}{{ status_msg }}{% endautoescape %}</p>
 
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text add-label" id="basic-addon1">
-                    Hive Label:
+                    * Hive Label:
                 </span>
             </div>
             <input type="text" class="form-control"
@@ -58,7 +57,7 @@
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <label class="input-group-text add-label" for="inputGroupSelect01">
-                    Queen Year:
+                    * Queen Year:
                 </label>
             </div>
             <select class="{{ year_color }} custom-select "
@@ -77,7 +76,7 @@
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <label class="input-group-text add-label" for="inputGroupSelect01">
-                    Queen Breed:
+                    * Queen Breed:
                 </label>
             </div>
             <select class="custom-select"
@@ -102,7 +101,7 @@
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text add-label" id="basic-addon1">
-                        Location:
+                        * Location:
                 </span>
             </div>
             <input type="text" class="form-control"
@@ -113,7 +112,7 @@
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text add-label" id="basic-addon1">
-                        Brood Boxes:
+                        * Brood Boxes:
                 </span>
             </div>
             <input type="number" class="form-control" min="1" value="1" pattern="\d*"
@@ -124,7 +123,7 @@
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text add-label" id="basic-addon1">
-                        Supers:
+                        * Supers:
                 </span>
             </div>
             <input type="number" class="form-control" min="0" value="0" pattern="\d*"

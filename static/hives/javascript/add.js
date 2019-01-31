@@ -46,16 +46,16 @@ function checkdata()  {
     var is_valid = true;
     var msg = "";
 
-    var hlbl = document.getElementById('label');
+    var hlbl = document.getElementById('hive_label');
     if (hlbl.value.length < 1)  {
         is_valid = false;
-        msg += 'hive label is required\n';
+        msg += '"Hive Label" is required\n';
     }
 
     var loc = document.getElementById('location');
     if (loc.value.length < 1)  {
         is_valid = false;
-        msg += 'Location is required\n';
+        msg += '"Location" is required\n';
     }
 
     var bb = document.getElementById('brood_boxes');

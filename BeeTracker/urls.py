@@ -23,6 +23,10 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    path('', include( 'hives.urls' ) ),
+
+
     # path('register/', user_views.register, name='register'),
 
     path('hives/', include( 'hives.urls' ) ),
