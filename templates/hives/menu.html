@@ -5,8 +5,8 @@
 
 {% load static %}
 <link rel="stylesheet" type="text/css"
-      href="{% static 'hives/css/add.css' %}">
-<script src="{% static 'hives/javascript/add.js' %}"></script>
+      href="{% static 'hives/css/list.css' %}">
+<script src="{% static 'hives/javascript/list.js' %}"></script>
 
 {% endblock header %}
 
@@ -14,16 +14,18 @@
 
 {% block content %}
 
-{% include "./base.html" %}
+{% include 'hives/base-start.html' %}
 
-
-<h1>Hives Menu</h1>
+<h1 class="center hives-width hives-heading">Hives Menu</h1>
 
 <br />
 
-<ul>
-    <li><a href="{% url 'add_hive'%}">Add a Hive</a></li>
-    <li><a href="{% url 'list_hives'%}">List Hives</a></li>
+<ul class="list-group">
+    <li class="list-group-item"><a href="{% url 'add_hive'%}">Add a Hive</a></li>
+    <li class="list-group-item"><a  href="{% url 'list_hives'%}">Hives List</a></li>
 </ul>
+
+
+{% include 'hives/base-end.html' %}
 
 {% endblock content %}

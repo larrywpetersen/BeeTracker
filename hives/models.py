@@ -9,13 +9,20 @@ class Hive(models.Model):
     id = models.AutoField(primary_key=True)
     date_entered = models.DateTimeField(auto_now=True)
     label = models.CharField(max_length=50 ,default='')
-    hive_from = models.CharField(max_length=50 ,default='')
+    hive_from = models.CharField(max_length=50 ,default='', blank=True)
     queen_year = models.IntegerField(default=2019)
     queen_breed = models.ForeignKey('Breed', on_delete=models.PROTECT)
-    queen_from = models.CharField(max_length=50 ,default='')
+    queen_from = models.CharField(max_length=50 ,default='', blank=True)
     location = models.CharField(max_length=50 ,default='')
     brood_boxes = models.IntegerField(default=1)
     supers = models.IntegerField(default=1)
+
+    def queen_color_class(self):
+        yr = self.queen_year % 5
+        return 'year%i' % yr
+
+    def queen_breed_name(self):
+        return self.queen_breed.name
 
     def __str__(self):
         # https://howchoo.com/g/ywi5m2vkodk/working-with-datetime-objects-and-timezones-in-python

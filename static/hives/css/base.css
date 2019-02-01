@@ -1,5 +1,15 @@
 
+.hives-label  {
+    text-align: right;
+    width: 150px;
+}
 
-h2 {
-    color: #b00000;
+.hives-width  {
+    width: 700px;
+}
+
+.hives-heading  {
+    background-color: #4040ff;
+    color: #ffffff;
+    border-radius: 10px;
 }

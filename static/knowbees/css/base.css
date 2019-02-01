@@ -1,4 +1,6 @@
 
+/* Basic Elements */
+
 body {
     background-color: #e4e476;
     margin-top : 30px;
@@ -16,6 +18,8 @@ select {
 }
 
 
+/* Text alignment */
+
 .left {
     text-align: left;
 }
@@ -28,10 +32,15 @@ select {
     text-align: right;
 }
 
+
+/* spacer row in tables */
+
 tr.tall {
     height: 20px;
 }
 
+
+/* Font Sizes */
 
 .text-s1 {
     padding: 3px;
@@ -48,6 +57,23 @@ tr.tall {
     font-size: 1.4em;
 }
 
+
+/* Sizes */
+
+.full-width  {
+    width: 100%;
+}
+
+.half-width  {
+    width: 50%;
+}
+
+.qtr-width  {
+    width: 25%;
+}
+
+
+/* Colors for Queen Years */
 
 .year0  {
     background-color: #0000ff;

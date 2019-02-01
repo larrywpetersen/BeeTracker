@@ -14,7 +14,7 @@
 
 {% block content %}
 
-{% include 'hives/base.html' %}
+{% include 'hives/base-start.html' %}
 
 
 <form id="add_form" method="POST" action="../add/"
@@ -22,122 +22,129 @@
 
     {% csrf_token %}
 
+    <h1 class="center hives-width hives-heading">Add a Hive Form</h1>
 
-    <div class="add-width center">    <!-- style="width: 700px; align-content: center;">  -->
+    <br /><br />
 
-        <h1 class="center add-width heading">Add a Hive</h1>
+    <p id="unique-message" class="add-p"></p>
 
-        <br /><br />
-        <p>{% autoescape off %}{{ status_msg }}{% endautoescape %}</p>
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text add-label" id="basic-addon1">
-                    * Hive Label:
-                </span>
-            </div>
-            <input type="text" class="form-control"
-                id="hive_label" name="hive_label"
-                value="{{ hive.label }}"
-                aria-label="Hive-Label" aria-describedby="basic-addon1" >
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text hives-label" id="basic-addon1">
+                * Hive Label:
+            </span>
         </div>
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text add-label" id="basic-addon1">
-                    Hive From:
-                </span>
-            </div>
-            <input type="text" class="form-control"
-                   id="hive_from" name="hive_from"
-                   value="{{ hive_from }}"
-                   aria-label="Hive-From" aria-describedby="basic-addon1" >
-        </div>
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <label class="input-group-text add-label" for="inputGroupSelect01">
-                    * Queen Year:
-                </label>
-            </div>
-            <select class="{{ year_color }} custom-select "
-                    id="queen_year" name="queen_year"
-                    onchange="change_year()" >
-                {% for year in years %}
-                    <option 
-                    {% ifequal year queen_year %}
-                        selected="selected"
-                    {% endifequal %}
-                    value="{{ year }}">{{ year }}</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <label class="input-group-text add-label" for="inputGroupSelect01">
-                    * Queen Breed:
-                </label>
-            </div>
-            <select class="custom-select"
-                    id="queen_breed" name="queen_breed" >
-                {% for breed in breeds %}
-                    <option value="{{ breed }}">{{ breed }}</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text add-label" id="basic-addon1">
-                    Queen From:
-                </span>
-            </div>
-            <input type="text" class="form-control"
-                    id="queen_from" name="queen_from"
-                    aria-label="Queen-From" aria-describedby="basic-addon1" >
-        </div>
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text add-label" id="basic-addon1">
-                        * Location:
-                </span>
-            </div>
-            <input type="text" class="form-control"
-                    id="location" name="location"
-                    aria-label="Location" aria-describedby="basic-addon1" >
-        </div>
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text add-label" id="basic-addon1">
-                        * Brood Boxes:
-                </span>
-            </div>
-            <input type="number" class="form-control" min="1" value="1" pattern="\d*"
-                    id="brood_boxes" name="brood_boxes"
-                    aria-label="Brood-Boxes" aria-describedby="basic-addon1" >
-        </div>
-
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text add-label" id="basic-addon1">
-                        * Supers:
-                </span>
-            </div>
-            <input type="number" class="form-control" min="0" value="0" pattern="\d*"
-                    id="supers" name="supers"
-                    aria-label="Supers" aria-describedby="basic-addon1" >
-        </div>
-
-        <br />
-
-        <button class="center btn btn-primary btn-lg btn-block" type="submit">Add Hive</button>
-
+        <input type="text" class="form-control"
+            id="hive_label" name="hive_label"
+            onchange="is_label_unique()"
+            value="{{ hive.label }}"
+            aria-label="Hive-Label" aria-describedby="basic-addon1" >
     </div>
+
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text hives-label" id="basic-addon1">
+                Hive From:
+            </span>
+        </div>
+        <input type="text" class="form-control"
+                id="hive_from" name="hive_from"
+                value="{{ hive_from }}"
+                aria-label="Hive-From" aria-describedby="basic-addon1" >
+    </div>
+
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <label class="input-group-text hives-label" for="inputGroupSelect01">
+                * Queen Year:
+            </label>
+        </div>
+        <select class="{{ year_color }} custom-select "
+                id="queen_year" name="queen_year"
+                onchange="change_year()" >
+            {% for year in years %}
+                <option 
+                {% ifequal year queen_year %}
+                    selected="selected"
+                {% endifequal %}
+                value="{{ year }}">{{ year }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <label class="input-group-text hives-label" for="inputGroupSelect01">
+                * Queen Breed:
+            </label>
+        </div>
+        <select class="custom-select"
+                id="queen_breed" name="queen_breed" >
+            {% for breed in breeds %}
+                <option value="{{ breed }}">{{ breed }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text hives-label" id="basic-addon1">
+                Queen From:
+            </span>
+        </div>
+        <input type="text" class="form-control"
+                id="queen_from" name="queen_from"
+                aria-label="Queen-From" aria-describedby="basic-addon1" >
+    </div>
+
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text hives-label" id="basic-addon1">
+                    * Location:
+            </span>
+        </div>
+        <input type="text" class="form-control"
+                id="location" name="location"
+                aria-label="Location" aria-describedby="basic-addon1" >
+    </div>
+
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text hives-label" id="basic-addon1">
+                    * Brood Boxes:
+            </span>
+        </div>
+        <input type="number" class="form-control" min="1" value="1" pattern="\d*"
+                id="brood_boxes" name="brood_boxes"
+                aria-label="Brood-Boxes" aria-describedby="basic-addon1" >
+    </div>
+
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text hives-label" id="basic-addon1">
+                    * Supers:
+            </span>
+        </div>
+        <input type="number" class="form-control" min="0" value="0" pattern="\d*"
+                id="supers" name="supers"
+                aria-label="Supers" aria-describedby="basic-addon1" >
+    </div>
+
+    <br />
+
+    <p class="add-p">{% autoescape off %}{{ status_msg }}{% endautoescape %}</p>
+
+    <br />
+
+    <button class="center btn btn-primary btn-lg btn-block" type="submit">Add Hive</button>
+
+    <a href="../menu" class="btn btn-primary btn-lg active btn-block" role="button" aria-pressed="true">
+        Hive Menu
+    </a>
 
 </form>
 
+
+{% include 'hives/base-end.html' %}
 
 {% endblock content %}

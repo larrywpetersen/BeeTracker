@@ -1,0 +1,33 @@
+{% extends "knowbees/base.html" %}
+
+
+{% block header %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css"
+      href="{% static 'hives/css/delete.css' %}">
+<script src="{% static 'hives/javascript/delete.js' %}"></script>
+
+{% endblock header %}
+
+
+
+{% block content %}
+
+{% include "./base-start.html" %}
+
+
+<h1 class="center hives-width hives-heading">Hive "{{ hive_label }}" Deleted</h1>
+
+<br /><br />
+
+<a href="../menu" class="btn btn-primary btn-lg active btn-block" role="button" aria-pressed="true">
+    Hive Menu
+</a>
+
+
+
+
+{% include 'hives/base-end.html' %}
+
+{% endblock content %}

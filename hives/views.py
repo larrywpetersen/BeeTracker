@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
+
 import datetime
 
 from .models import Hive, Breed
@@ -9,7 +11,6 @@ def menu(request):
 
 
 def add(request):
-
     if ( request.method=='GET'):
         hive = Hive()
         queen_year = datetime.datetime.now().year
@@ -70,8 +71,49 @@ def add(request):
                 'status_msg': status_msg }
     return render(request, 'hives/add.html', context)
 
+
+def build_hive_list():
+    hives = Hive.objects.all().order_by('label')
+    hive_list = []
+    for hive in hives:
+        items = {}
+        items['date_entered'] = hive.date_entered
+        items['label'] = hive.label
+        items['hive_from'] = hive.hive_from
+        items['queen_year'] = hive.queen_year
+        items['queen_breed_name'] = hive.queen_breed_name()
+        items['queen_color_class'] = hive.queen_color_class()
+        items['queen_from'] = hive.queen_from
+        items['location'] = hive.location
+        items['brood_boxes'] = hive.brood_boxes
+        items['supers'] = hive.supers
+        hive_list.append( items)
+    return hive_list
+
 def list(request):
-    context = {}
+    hive_list = build_hive_list()
+    context = { 'hive_list': hive_list }
+    return render(request, 'hives/list.html', context)
+
+
+def edit(request):
+    hive_label = request.GET['label']
+    # print('Edit %s' % hive_label)
+    hive_list = build_hive_list()
+    context = { 'hive_list': hive_list }
+    context = { 'hive_label': hive_label}
+    return render(request, 'hives/edit.html', context)
+
+
+def delete(request):
+    hive_label = request.GET['label']
+    hive = Hive.objects.filter(label=hive_label)
+    print(hive)
+    hive.delete()
+    print('Deleted hive "%s"' % hive_label)
+    hive_list = build_hive_list()
+    context = { 'hive_list': hive_list }
+    context['message'] = 'hive "%s" has been deleted' % hive_label
     return render(request, 'hives/list.html', context)
 
 
@@ -85,12 +127,68 @@ def list(request):
 # ###############################################
 
 
+# ###############################################
+#
+#    get_hive_simple_list
+#
+#    return a list of the label and location
+#    of each of the hives
+#
+# ###############################################
+
+def get_hive_simple_list(request):
+    hives = Hive.objects.all().order_by('label')
+    jason_data = []
+    for hive in hives:
+        items = {}
+        items['label'] = hive.label
+        items['location'] = hive.location
+        jason_data.append( items)
+    return JsonResponse(jason_data, safe=False)
+
 
 # ###############################################
 #
-#    get_hive_list
+#    get_hive_full_list
+#
+#    return a list of everything about
+#    each of the hives
 #
 # ###############################################
 
-def get_hive_list(request):
-    return ''
+def get_hive_full_list(request):
+    hives = Hive.objects.all().order_by('label')
+    jason_data = []
+    for hive in hives:
+        items = {}
+        items['date_entered'] = hive.date_entered
+        items['label'] = hive.label
+        items['hive_from'] = hive.hive_from
+        items['queen_year'] = hive.queen_year
+        items['queen_breed'] = hive.queen_breed.name
+        items['queen_from'] = hive.queen_from
+        items['location'] = hive.location
+        items['brood_boxes'] = hive.brood_boxes
+        items['supers'] = hive.supers
+        jason_data.append( items)
+    return JsonResponse(jason_data, safe=False)
+
+
+# ###############################################
+#
+#    is_hive_label_unique
+#
+#    return a list of everything about
+#    each of the hives
+#
+# ###############################################
+
+def is_hive_label_unique(request):
+    hives = Hive.objects.all()
+    target = request.GET['label']
+    unique = True
+    for hive in hives:
+        if hive.label == target:
+            unique = False
+    jason_data = [{'unique': unique}]
+    return JsonResponse(jason_data, safe=False)

@@ -1,4 +1,6 @@
 
+// Change the color of the Queen Year to match the new year
+
 function change_year()  {
     var e = document.getElementById("queen_year");
     var value = e.options[e.selectedIndex].value;
@@ -42,6 +44,40 @@ function change_year()  {
 }
 
 
+// Check to see if the label is unique
+
+var label_is_unique = true;
+
+var xmlhttp_label_unique = new XMLHttpRequest();
+
+xmlhttp_label_unique.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        var answer = JSON.parse(this.responseText);
+        do_is_label_unique(answer);
+    }
+};
+
+function is_label_unique()  {
+    var label = document.getElementById("hive_label").value;
+    var url = "../is_hive_label_unique/?label=" + label;
+    xmlhttp_label_unique.open("GET", url, true);
+    xmlhttp_label_unique.send();
+}
+
+function do_is_label_unique(answer) {
+    label_is_unique = answer[0].unique;
+    if (label_is_unique)  {
+        document.getElementById("unique-message").innerHTML =
+        '<font color="green">label is unique</font>';
+    }  else  {
+        document.getElementById("unique-message").innerHTML =
+            '<font color="red">label is not unique</font>';
+    }
+}
+
+
+// Validate Form Data
+
 function checkdata()  {
     var is_valid = true;
     var msg = "";
@@ -50,6 +86,11 @@ function checkdata()  {
     if (hlbl.value.length < 1)  {
         is_valid = false;
         msg += '"Hive Label" is required\n';
+    }
+
+    if ( ! label_is_unique )  {
+        is_valid = false;
+        msg += '"Hive Label" must be unique\n';
     }
 
     var loc = document.getElementById('location');

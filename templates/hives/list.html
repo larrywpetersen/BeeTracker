@@ -5,8 +5,8 @@
 
 {% load static %}
 <link rel="stylesheet" type="text/css"
-      href="{% static 'hives/css/add.css' %}">
-<script src="{% static 'hives/javascript/add.js' %}"></script>
+      href="{% static 'hives/css/list.css' %}">
+<script src="{% static 'hives/javascript/list.js' %}"></script>
 
 {% endblock header %}
 
@@ -14,9 +14,77 @@
 
 {% block content %}
 
-{% include "./base.html" %}
+{% include "./base-start.html" %}
 
 
-<h1>List Hives</h1>
+<h1 class="center hives-width hives-heading">Hives List</h1>
+
+<br />
+
+{% if message %}
+<p>{{ message }}</p>
+<br />
+{% endif %}
+
+<table class="list-table-outer hives-width"><tr><td>
+<table id="main-table" class="list-table full-width">
+
+    <tr>
+        <th class="center list-table"></th>
+        <th class="center list-table">
+            Hive Label
+        </th>
+        <th class="center list-table">
+            Hive location
+        </th>
+        <th class="center list-table">
+            Queen Year
+        </th>
+        <th class="center list-table">
+            Queen Breed
+        </th>
+        <th class="center list-table">
+            Supers
+        </th>
+    </tr>
+
+    {% if hive_list %}
+        {% for hive in hive_list %}
+            <tr class="list-table">
+                <td class="center list-table">
+                    <div class="row">
+                        <div class="column">&nbsp;</div>
+                        <div class="column">
+                            <a href="../edit?label={{ hive.label }}">
+                                <img src="{% static 'hives/pics/edit.svg' %}" alt="edit" 
+                                    height="20" width="20">
+                            </a>
+                        </div>
+                        <div class="column">&nbsp;</div>
+                        <div class="column">
+                            <a href="../delete?label={{ hive.label }}">
+                                <img src="{% static 'hives/pics/delete.ico' %}" alt="del" 
+                                    height="20" width="20">
+                            </a>
+                        </div>
+                        <div class="column">&nbsp;</div>
+                </td>
+                <td class="center list-table {{ hive.queen_color_class }}">{{ hive.label }}</td>
+                <td class="center list-table {{ hive.queen_color_class }}">{{ hive.location }}</td>
+                <td class="center list-table {{ hive.queen_color_class }}">{{ hive.queen_year }}</td>
+                <td class="center list-table {{ hive.queen_color_class }}">{{ hive.queen_breed_name }}</td>
+                <td class="center list-table {{ hive.queen_color_class }}">{{ hive.supers }}</td>
+            </tr>
+        {% endfor %}
+    {% else %}
+            <tr>
+                <td>No hives have been entered</td>
+            </tr>
+    {% endif %}
+
+</table>
+</td></tr></table>
+
+{% include 'hives/base-end.html' %}
 
 {% endblock content %}
