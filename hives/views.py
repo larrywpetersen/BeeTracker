@@ -36,13 +36,13 @@ def add(request):
         for breed in breeds:
             # print('%s - %s' % (breed, breed.name))
             if breed.name == name:
-                print('setting breed to %s' % breed.name)
+                # print('setting breed to %s' % breed.name)
                 queen_breed = breed
         # print('queen_breed set to %s' % queen_breed)
 
         hive.queen_breed = queen_breed
         hive.queen_from = request.POST['queen_from']
-        hive.location = request.POST['location']
+        # hive.pallet = request.POST['pallet']
         hive.brood_boxes = request.POST['brood_boxes']
         hive.supers = request.POST['supers']
         status_msg = 'hive "%s" has been added' % hive.label
@@ -81,7 +81,7 @@ def add(request):
     context['form_action'] = '../add/'
     context['page_title'] = 'Add a Hive'
     context['submit_text'] = 'Add Hive'
-    return render(request, 'hives/add_edit.html', context)
+    return render(request, 'hives/add_edit_hive.html', context)
 
 
 def build_hive_list():
@@ -130,13 +130,13 @@ def edit(request):
 
         hive.queen_breed = queen_breed
         hive.queen_from = request.POST['queen_from']
-        hive.location = request.POST['location']
-        print('brood boxes = %s' % request.POST['brood_boxes'])
-        print('supers = %s' % request.POST['supers'])
+        hive.pallet = request.POST['pallet']
+        # print('brood boxes = %s' % request.POST['brood_boxes'])
+        # print('supers = %s' % request.POST['supers'])
         hive.brood_boxes = int(request.POST['brood_boxes'])
         hive.supers = int(request.POST['supers'])
-        print('hive.brood_boxes = %i' % hive.brood_boxes)
-        print('hive.supers = %i' % hive.supers)
+        # print('hive.brood_boxes = %i' % hive.brood_boxes)
+        # print('hive.supers = %i' % hive.supers)
         status_msg = 'hive "%s" has been updated' % hive.label
         hive.save()
 
@@ -164,7 +164,7 @@ def edit(request):
     context['page_title'] = 'Edit Hive'
     context['hive'] = hive
     context['submit_text'] = 'Make Changes'
-    return render(request, 'hives/add_edit.html', context)
+    return render(request, 'hives/add_edit_hive.html', context)
 
 
 def delete(request):
