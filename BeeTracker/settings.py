@@ -25,7 +25,7 @@ SECRET_KEY = '95hab3w=%l6pomf!$ky3dn2r53isf3%y79bv&k2l-ml(lg%s66'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['68.183.175.127', 'beetracker.duckdns.org']
 
 
 # Application definition
