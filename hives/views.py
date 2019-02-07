@@ -13,7 +13,6 @@ def menu(request):
 def add(request):
     if ( request.method=='GET'):
         hive = Hive()
-        # queen_year = datetime.datetime.now().year
         queen_breed = ''
         status_msg = ''
     else:
@@ -24,35 +23,30 @@ def add(request):
         hive.queen_year = int(request.POST['queen_year'])
 
         name = request.POST['queen_breed']
-        print('looking up %s' % name)
         breeds = Breed.objects.all()
-        print()
-        print(breeds)
-        print()
-        print(name)
-        print()
         queen_breed = ''
-        # queen_breed = breeds.objects.all()
         for breed in breeds:
-            # print('%s - %s' % (breed, breed.name))
             if breed.name == name:
-                # print('setting breed to %s' % breed.name)
                 queen_breed = breed
-        # print('queen_breed set to %s' % queen_breed)
-
         hive.queen_breed = queen_breed
+
         hive.queen_from = request.POST['queen_from']
-        # hive.pallet = request.POST['pallet']
+
+        name = request.POST['pallet']
+        pallets = Pallet.objects.all()
+        pallet_obj = ''
+        for pallet in pallets:
+            if pallet.name == name:
+                pallet_obj = pallet
+        hive.pallet = pallet_obj
+
         hive.brood_boxes = request.POST['brood_boxes']
         hive.supers = request.POST['supers']
         status_msg = 'hive "%s" has been added' % hive.label
         hive.save()
         hive = Hive()
-        # queen_year = hive.queen_year
         queen_breed = ''
 
-    # print('queen_year = %i' % queen_year)
-    # queen_year = hive.queen_year
     year_color = "year%i" % (hive.queen_year % 5)
     ylst = []
     for year in range(hive.queen_year - 10, hive.queen_year + 3):
@@ -71,7 +65,7 @@ def add(request):
     context = { 'title': 'Hives - Add',
                 'years': ylst,
                 # 'queen_year' : queen_year,
-                'queen_breed': queen_breed,
+                # 'queen_breed': queen_breed,
                 'year_color': year_color,
                 'breeds': blst,
                 'pallets': plst,
@@ -91,6 +85,7 @@ def build_hive_list():
         items = {}
         items['date_entered'] = hive.date_entered
         items['label'] = hive.label
+        items['pallet_name'] = hive.pallet_name
         items['hive_from'] = hive.hive_from
         items['queen_year'] = hive.queen_year
         items['queen_breed_name'] = hive.queen_breed_name()
@@ -106,7 +101,7 @@ def build_hive_list():
 def list(request):
     hive_list = build_hive_list()
     context = { 'hive_list': hive_list }
-    context['title'] = 'List'
+    context['title'] = 'Hives - List'
     return render(request, 'hives/list.html', context)
 
 
@@ -127,16 +122,20 @@ def edit(request):
         for breed in breeds:
             if breed.name == name:
                 queen_breed = breed
-
         hive.queen_breed = queen_breed
+
         hive.queen_from = request.POST['queen_from']
-        hive.pallet = request.POST['pallet']
-        # print('brood boxes = %s' % request.POST['brood_boxes'])
-        # print('supers = %s' % request.POST['supers'])
+
+        name = request.POST['pallet']
+        pallets = Pallet.objects.all()
+        pallet_obj = ''
+        for pallet in pallets:
+            if pallet.name == name:
+                pallet_obj = pallet
+        hive.pallet = pallet_obj
+
         hive.brood_boxes = int(request.POST['brood_boxes'])
         hive.supers = int(request.POST['supers'])
-        # print('hive.brood_boxes = %i' % hive.brood_boxes)
-        # print('hive.supers = %i' % hive.supers)
         status_msg = 'hive "%s" has been updated' % hive.label
         hive.save()
 
@@ -149,17 +148,22 @@ def edit(request):
     blst = []
     for breed in breeds:
         blst.append( breed.name)
-
+    pallets = Pallet.objects.all().order_by('name')
+    plst = []
+    for pallet in pallets:
+        plst.append( { 'name': pallet.name, 'location': pallet.yard.name})
+    print(plst)
     context = { 'title': 'Hives - Edit',
                 'years': ylst,
                 'year_color': year_color,
                 'breeds': blst,
+                'pallets': plst,
                 'hive': hive, }
 
     if len(status_msg) > 0:
         context['status_msg'] = status_msg
 
-    context['title'] = 'Edit'
+    context['title'] = 'Hives - Edit'
     context['form_action'] = '../edit/?label=%s' % hive.label
     context['page_title'] = 'Edit Hive'
     context['hive'] = hive

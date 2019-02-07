@@ -17,6 +17,15 @@ class Hive(models.Model):
     brood_boxes = models.IntegerField(default=1)
     supers = models.IntegerField(default=0)
 
+    @property
+    def location(self):
+        return self.pallet.yard.name
+
+    @property
+    def pallet_name(self):
+        return self.pallet.name
+
+
     def queen_color_class(self):
         yr = self.queen_year % 5
         return 'year%i' % yr
@@ -32,7 +41,7 @@ class Hive(models.Model):
                ' (on pallet %s at %s), %i brood box(es), %i super(s), entered on %s.' \
                % (self.id, self.label, self.hive_from,
                self.queen_year, self.queen_breed.name, self.queen_from,
-               self.pallet.name, self.pallet.yard.name,
+               self.pallet_name, self.location,  ## self.pallet.yard.name,
                self.brood_boxes, self.supers, de.strftime('%c'))
 
 

@@ -114,11 +114,11 @@
                 id="pallet" name="pallet" >
             {% for pallet in pallets %}
                 <option
-                    {% ifequal pallet hive.pallet %}
+                    {% ifequal pallet.name hive.pallet_name %}
                         selected="selected"
                     {% endifequal %}
-                        value="{{ pallet }}">
-                    {{ pallet }}
+                        value="{{ pallet.name }}">
+                    {{ pallet.name }} at {{ pallet.location }}
                 </option>
             {% endfor %}
         </select>
