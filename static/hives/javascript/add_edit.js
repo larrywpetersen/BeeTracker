@@ -105,11 +105,11 @@ function checkdata()  {
         msg += '"Hive Label" must be unique\n';
     }
 
-    var loc = document.getElementById('location');
-    if (loc.value.length < 1)  {
-        is_valid = false;
-        msg += '"Location" is required\n';
-    }
+    // var loc = document.getElementById('location');
+    // if (loc.value.length < 1)  {
+    //     is_valid = false;
+    //     msg += '"Location" is required\n';
+    // }
 
     var bb = document.getElementById('brood_boxes');
     if ( bb.value < 1)  {
