@@ -59,19 +59,13 @@ def add(request):
     plst = []
     for pallet in pallets:
         plst.append(pallet.name)
-        print(pallet)
-        print("    %s" % pallet.name)
-    print(plst)
     context = { 'title': 'Hives - Add',
                 'years': ylst,
-                # 'queen_year' : queen_year,
-                # 'queen_breed': queen_breed,
                 'year_color': year_color,
                 'breeds': blst,
                 'pallets': plst,
                 'hive': hive,
                 'status_msg': status_msg }
-    # context['title'] = 'Add'
     context['form_action'] = '../add/'
     context['page_title'] = 'Add a Hive'
     context['submit_text'] = 'Add Hive'
@@ -152,7 +146,6 @@ def edit(request):
     plst = []
     for pallet in pallets:
         plst.append( { 'name': pallet.name, 'location': pallet.yard.name})
-    print(plst)
     context = { 'title': 'Hives - Edit',
                 'years': ylst,
                 'year_color': year_color,
@@ -174,9 +167,7 @@ def edit(request):
 def delete(request):
     hive_label = request.GET['label']
     hive = Hive.objects.filter(label=hive_label)
-    print(hive)
     hive.delete()
-    print('Deleted hive "%s"' % hive_label)
     hive_list = build_hive_list()
     context = { 'hive_list': hive_list }
     context['message'] = 'hive "%s" has been deleted' % hive_label
