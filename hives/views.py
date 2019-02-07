@@ -58,7 +58,7 @@ def add(request):
     pallets = Pallet.objects.all().order_by('name')
     plst = []
     for pallet in pallets:
-        plst.append(pallet.name)
+        plst.append( { 'name': pallet.name, 'location': pallet.yard.name})
     context = { 'title': 'Hives - Add',
                 'years': ylst,
                 'year_color': year_color,

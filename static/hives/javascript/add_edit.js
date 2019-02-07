@@ -79,8 +79,8 @@ function is_label_unique()  {
 function do_is_label_unique(answer) {
     label_is_unique = answer[0].unique;
     if (label_is_unique)  {
-        document.getElementById("unique-message").innerHTML =
-        '<font color="green">label is unique</font>';
+        // document.getElementById("unique-message").innerHTML =
+        // '<font color="green">label is unique</font>';
     }  else  {
         document.getElementById("unique-message").innerHTML =
             '<font color="red">label is not unique</font>';
