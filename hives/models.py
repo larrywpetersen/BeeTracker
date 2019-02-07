@@ -13,9 +13,9 @@ class Hive(models.Model):
     queen_year = models.IntegerField(default=2019)
     queen_breed = models.ForeignKey('Breed', on_delete=models.PROTECT)
     queen_from = models.CharField(max_length=50 ,default='', blank=True)
-    location = models.CharField(max_length=50 ,default='')
+    pallet = models.ForeignKey('Pallet', on_delete=models.PROTECT, default=1)
     brood_boxes = models.IntegerField(default=1)
-    supers = models.IntegerField(default=1)
+    supers = models.IntegerField(default=0)
 
     def queen_color_class(self):
         yr = self.queen_year % 5
@@ -29,14 +29,36 @@ class Hive(models.Model):
         de = self.date_entered.astimezone(pytz.timezone('US/Mountain'))
         return '<%s> Hive "%s", from %s, '  \
                'Queen(%i, %s, from %s), ' \
-               'at %s, %i brood box(es), %i super(s), entered on %s.' \
+               ' (on pallet %s at %s), %i brood box(es), %i super(s), entered on %s.' \
                % (self.id, self.label, self.hive_from,
                self.queen_year, self.queen_breed.name, self.queen_from,
-               self.location, self.brood_boxes, self.supers, de.strftime('%c'))
-
+               self.pallet.name, self.pallet.yard.name,
+               self.brood_boxes, self.supers, de.strftime('%c'))
 
 
 class Breed(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=50, default='')
+
+    def __str__(self):
+        return '<%s> %s' % (self.id, self.name)
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=50, default='')
+
+    def __str__(self):
+        return '<%s> %s' % (self.id, self.name)
+
+
+class Pallet(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=50, default='')
+    yard =  models.ForeignKey('Yard', on_delete=models.PROTECT)
+
+    def __str__(self):
+        return '<%s> %s at %s' % (self.id, self.name, self.yard.name)
+
+
+class Yard(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50, default='')
 

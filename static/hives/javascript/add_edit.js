@@ -1,4 +1,16 @@
 
+
+// Handle change to hive from field
+
+function change_from()  {
+    var qf = document.getElementById("queen_from");
+    if( qf.value.length == 0 )  {
+        var hf = document.getElementById("hive_from");
+        qf.value = hf.value;
+    }
+}
+
+
 // Change the color of the Queen Year to match the new year
 
 function change_year()  {
@@ -70,8 +82,8 @@ function do_is_label_unique(answer) {
         document.getElementById("unique-message").innerHTML =
         '<font color="green">label is unique</font>';
     }  else  {
-        // document.getElementById("unique-message").innerHTML =
-        //     '<font color="red">label is not unique</font>';
+        document.getElementById("unique-message").innerHTML =
+            '<font color="red">label is not unique</font>';
     }
 }
 

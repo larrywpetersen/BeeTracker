@@ -1,0 +1,39 @@
+{% extends "knowbees/base.html" %}
+
+
+{% block header %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css"
+      href="{% static 'hives/css/add_edit.css' %}">
+<script src="{% static 'hives/javascript/add_edit.js' %}"></script>
+
+{% endblock header %}
+
+
+
+{% block content %}
+
+{% include 'hives/base-start.html' %}
+
+
+<form id="add_form" method="POST" action="{{ form_action }}"
+      onsubmit="return checkdata()">
+
+    {% csrf_token %}
+
+    <h1 class="center hives-width hives-heading">{{ page_title }}</h1>
+
+    <br /><br />
+
+    <p id="unique-message" class="add-p"></p>
+
+
+
+
+</form>
+
+
+{% include 'hives/base-end.html' %}
+
+{% endblock content %}

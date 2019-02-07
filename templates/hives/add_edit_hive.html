@@ -5,8 +5,8 @@
 
 {% load static %}
 <link rel="stylesheet" type="text/css"
-      href="{% static 'hives/css/add.css' %}">
-<script src="{% static 'hives/javascript/add.js' %}"></script>
+      href="{% static 'hives/css/add_edit.css' %}">
+<script src="{% static 'hives/javascript/add_edit.js' %}"></script>
 
 {% endblock header %}
 
@@ -17,12 +17,12 @@
 {% include 'hives/base-start.html' %}
 
 
-<form id="add_form" method="POST" action="../add/"
+<form id="add_form" method="POST" action="{{ form_action }}"
       onsubmit="return checkdata()">
 
     {% csrf_token %}
 
-    <h1 class="center hives-width hives-heading">Add a Hive Form</h1>
+    <h1 class="center hives-width hives-heading">{{ page_title }}</h1>
 
     <br /><br />
 
@@ -48,8 +48,9 @@
             </span>
         </div>
         <input type="text" class="form-control"
-                id="hive_from" name="hive_from"
-                value="{{ hive_from }}"
+                id="hive_from" name="hive_from"'
+                onchange="change_from()"
+                value="{{ hive.hive_from }}"
                 aria-label="Hive-From" aria-describedby="basic-addon1" >
     </div>
 
@@ -64,7 +65,7 @@
                 onchange="change_year()" >
             {% for year in years %}
                 <option 
-                {% ifequal year queen_year %}
+                {% ifequal year hive.queen_year %}
                     selected="selected"
                 {% endifequal %}
                 value="{{ year }}">{{ year }}</option>
@@ -81,7 +82,11 @@
         <select class="custom-select"
                 id="queen_breed" name="queen_breed" >
             {% for breed in breeds %}
-                <option value="{{ breed }}">{{ breed }}</option>
+                <option
+                {% ifequal breed hive.queen_breed_name %}
+                    selected="selected"
+                {% endifequal %}
+                 value="{{ breed }}">{{ breed }}</option>
             {% endfor %}
         </select>
     </div>
@@ -94,6 +99,7 @@
         </div>
         <input type="text" class="form-control"
                 id="queen_from" name="queen_from"
+                value="{{ hive.queen_from }}"
                 aria-label="Queen-From" aria-describedby="basic-addon1" >
     </div>
 
@@ -103,16 +109,19 @@
                     * Pallet:
             </span>
         </div>
-
-        <select>
+    
+        <select class="custom-select"
+                id="pallet" name="pallet" >
             {% for pallet in pallets %}
-                <option value="{{ pallet.name }}">{{ pallet.name }}</option>
+                <option
+                    {% ifequal pallet hive.pallet %}
+                        selected="selected"
+                    {% endifequal %}
+                        value="{{ pallet }}">
+                    {{ pallet }}
+                </option>
             {% endfor %}
         </select>
-
-        <input type="text" class="form-control"
-                id="pallet" name="pallet"
-                aria-label="Pallet" aria-describedby="basic-addon1" >
     </div>
 
     <div class="input-group">
@@ -121,8 +130,9 @@
                     * Brood Boxes:
             </span>
         </div>
-        <input type="number" class="form-control" min="1" value="1" pattern="\d*"
+        <input type="number" class="form-control" min="1" pattern="\d*"
                 id="brood_boxes" name="brood_boxes"
+                value="{{ hive.brood_boxes }}""
                 aria-label="Brood-Boxes" aria-describedby="basic-addon1" >
     </div>
 
@@ -132,18 +142,23 @@
                     * Supers:
             </span>
         </div>
-        <input type="number" class="form-control" min="0" value="0" pattern="\d*"
+        <input type="number" class="form-control" min="0" pattern="\d*"
                 id="supers" name="supers"
+                value="{{ hive.supers }}"
                 aria-label="Supers" aria-describedby="basic-addon1" >
     </div>
 
     <br />
 
-    <p class="add-p">{% autoescape off %}{{ status_msg }}{% endautoescape %}</p>
+    {% if status_msg %}
+        <p class="add-p">{% autoescape off %}{{ status_msg }}{% endautoescape %}</p>
+    {% endif %}
+
+    <p>* <small>- Indicates Required Fields</small></p>
 
     <br />
 
-    <button class="center btn btn-primary btn-lg btn-block" type="submit">Add Hive</button>
+    <button class="center btn btn-primary btn-lg btn-block" type="submit">{{ submit_text }}</button>
 
     <a href="../menu" class="btn btn-primary btn-lg active btn-block" role="button" aria-pressed="true">
         Hive Menu
